@@ -1,18 +1,22 @@
 import Image from "next/image";
-import { signIn, sigOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/client";
 import {
   MenuIcon,
   SearchIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/outline";
+import { useRouter } from "next/router";
 
 function Navbar() {
+  const [session]=useSession();
+  const router = useRouter();
   return (
     <header>
       {/*top nav*/}
       <div className="flex items-center bg-amazon_blue p-1 flex-grow py-2">
         <div className="mt-2 flex items-center flex-grow sm:flex-grow-0">
           <Image
+            onClick={()=>router.push("/")}
             src="https://links.papareact.com/f90"
             width={150}
             height={40}
@@ -31,8 +35,8 @@ function Navbar() {
         </div>
         {/*---------------------------------------------*/}
         <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
-          <div onClick={signIn} className="link">
-            <p>Hello user</p>
+          <div onClick={session ?signOut : signIn} className="link">
+            <p>{session ? `${session.user.name}`:"SignIn"}</p>
             <p className="font-extrabold md:text-sm">Account & Lists</p>
           </div>
 
@@ -41,7 +45,7 @@ function Navbar() {
             <p className="font-extrabold md:text-sm">& Orders</p>
           </div>
 
-          <div className="relative link flex items-center">
+          <div onClick={()=>router.push('/checkout')} className="relative link flex items-center">
             <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">
               0
             </span>
