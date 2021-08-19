@@ -15,7 +15,7 @@ function Navbar() {
   const items = useSelector(selectItems)
 
   return (
-    <header>
+    <header className="sticky top-0 z-50">
       {/*top nav*/}
       <div className="flex items-center bg-amazon_blue p-1 flex-grow py-2">
         <div className="mt-2 flex items-center flex-grow sm:flex-grow-0">
@@ -30,7 +30,7 @@ function Navbar() {
         </div>
 
         {/*Search bar*/}
-        <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer bg-yellow-400 hover:bg-yellow-500">
+        <div className="hidden sm:flex items-center h-10 rounded-md cursor-pointer bg-yellow-400 hover:bg-yellow-500 flex-grow">
           <input
             type="text"
             className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4"
