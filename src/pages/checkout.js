@@ -8,14 +8,14 @@ import { useSession } from "next-auth/client";
 
 function Checkout() {
   const items = useSelector(selectItems);
-  const total = useSelector(selectTotal)
-  const [session] = useSession;
+  const total = useSelector(selectTotal);
+  const [session] = useSession();
 
   return (
     <div className="bg-gray-100">
       <Navbar />
 
-      <main className="lg:flex max-w-2xl mx-auto">
+      <main className="lg:flex max-w-screen-2xl mx-auto">
         {/*Left*/}
         <div className="flex-grow m-5 shadow-sm">
           <Image
@@ -59,7 +59,7 @@ function Checkout() {
                 disabled={!session}
                 className={`button mt-2 ${
                   !session &&
-                  "front-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor cursor-not-allowed"
+                  "from-gray-300 to-gray-500 border-gray-200 text-gray-300 cursor cursor-not-allowed"
                 }`}
               >
                 {!session ? "Sign in to checkout" : "Proceed to checkout"}
