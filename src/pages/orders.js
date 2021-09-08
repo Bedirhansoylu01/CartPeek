@@ -20,18 +20,17 @@ function Orders({ orders }) {
           <h2>Please sign in to see your orders</h2>
         )}
         <div className="mt-5 space-y-4"></div>
-        {orders?.map(
-          ({ id, amount, amountShipping, items, timestamp, images }) => (
+        {orders?.map(({ id, amount, amountShipping, items, timestamp, images }) => (
             <Order
               key={id}
-              id={amount}
+              id={id}
+              amount={amount}
               amountShipping={amountShipping}
               items={items}
               timestamp={timestamp}
               images={images}
             />
-          )
-        )}
+          ))}
       </main>
     </div>
   );
@@ -45,13 +44,13 @@ export async function getServerSideProps(context) {
  
   if (!session) {
     return {
-      props: {session},
+      props: {},
     };
   }
   //firestore data
   const stripeOrders = await fdb
     .collection("users")
-    .doc(await session.user.email)
+    .doc(session.user.email)
     .collection("orders")
     .orderBy("timestamp", "desc")
     .get();
