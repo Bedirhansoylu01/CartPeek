@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectItems } from "../slices/basketSlice";
 
+
 function Navbar() {
   const [session]=useSession();
   const router = useRouter();
@@ -44,7 +45,7 @@ function Navbar() {
             <p className="font-extrabold md:text-sm">Account & Lists</p>
           </div>
 
-          <div className="link">
+          <div className="link"  onClick={()=>router.push("/orders")}>
             <p>Returns</p>
             <p className="font-extrabold md:text-sm">& Orders</p>
           </div>

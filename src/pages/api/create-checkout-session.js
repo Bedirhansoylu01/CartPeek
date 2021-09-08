@@ -16,11 +16,10 @@ export default async (req, res) => {
     },
   }));
   //console.log(items);
-  //console.log(email);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     shipping_address_collection:{
-        allowed_countries:["US","CA","GB"]
+        allowed_countries:["GB","CA","US","TR"]
     },
     line_items: transformedItems,
     mode:'payment',

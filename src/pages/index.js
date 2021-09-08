@@ -2,7 +2,7 @@ import Head from "next/head";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import ProductFeed from "../components/ProductFeed";
-
+import { getSession } from "next-auth/client";
 export default function Home({products}) {
   return (
     <div className="bg-gray-100">
@@ -22,13 +22,14 @@ export default function Home({products}) {
 }
 
 export async function getServerSideProps(context){
-  const products = await fetch("https://fakestoreapi.com/products").then(
-    (res) => res.json() 
-    );
+  const session = await getSession(context)
+  const response = await fetch("https://fakestoreapi.com/products")
+  const products = await response.json();
 
     return {
       props: {
-        products
+        products,
+        session
       }
     }
 

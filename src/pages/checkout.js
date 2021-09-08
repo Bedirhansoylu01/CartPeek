@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import CheckoutProduct from "../components/CheckoutProduct";
 import { selectItems, selectTotal } from "../slices/basketSlice";
 import Currency from "react-currency-formatter-v2";
-import { useSession } from "next-auth/client";
+import { useSession,getSession } from "next-auth/client";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 
@@ -96,3 +96,14 @@ function Checkout() {
 }
 
 export default Checkout;
+
+export async function getServerSideProps(context){
+  const session = await getSession(context)
+ 
+    return {
+      props: {
+        session
+      }
+    }
+
+}
