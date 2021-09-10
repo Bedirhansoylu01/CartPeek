@@ -9,9 +9,7 @@ serviceAccount.private_key = process.env.FIREBASE_PRIVATE_KEY;
 
 const app = !admin.apps.length
   ? admin.initializeApp({
-      credential: admin.credential.cert({
-      serviceAccount
-      }),
+      credential: admin.credential.cert(serviceAccount),
     })
   : admin.app();
 
@@ -24,7 +22,9 @@ const fulfilOrder = async (session) => {
     .firestore()
     .collection("users")
     .doc(session.metadata.email)
-    .collection("orders").doc(session.id).set({
+    .collection("orders")
+    .doc(session.id)
+    .set({
       amount: session.amount_total / 100,
       amount_shipping: session.total_details.amount_shipping / 100,
       images: JSON.parse(session.metadata.images),
@@ -35,13 +35,12 @@ const fulfilOrder = async (session) => {
     });
 };
 
-
 export default async (req, res) => {
   if (req.method === "POST") {
     const requestBuffer = await buffer(req);
     const payload = requestBuffer.toString();
     const sig = req.headers["stripe-signature"];
-    
+
     let event;
 
     // Verify that The Event posted came from STRIPE
